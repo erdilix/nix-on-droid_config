@@ -1,20 +1,23 @@
 {config, lib, pkgs, ... }:
 
 {
+  # add this 202604
+  home.username = "nix-on-droid"; 
+  home.homeDirectory = "/data/data/com.termux.nix/files/home";
   # Read the changelog before changing this value
   home.stateVersion = "24.05";
   home.packages = with pkgs;[
 	fastfetch
         htop
-        curl
-	zsh
+        #curl
+	#zsh
 	zsh-completions
 	zsh-powerlevel10k
 	ffmpeg
 	tree
-	eza
+	#eza
 	tenere
-        cmatrix
+        #cmatrix
 	#browsh
 	w3m
 	#alacritty
@@ -25,6 +28,9 @@
   #comment out this part to use stylix
   #fonts.fontconfig.enable = true;
   programs.home-manager.enable = true;
+  programs.man.enable = false;
+  nvim.enable = true;
+
   # insert home-manager config
   programs.zoxide.enable = true;
   programs.yazi = {

@@ -6,6 +6,7 @@
     # User-facing stuff that you really really want to have
     vim # or some other editor, e.g. nano or neovim
     openssh
+    #home-manager
     # Some common stuff that people expect to have
     #procps
     killall
@@ -14,7 +15,7 @@
     utillinux
     #tzdata
     #hostname
-    man
+    #man
     gnugrep
     #gnupg
     #gnused
@@ -67,9 +68,9 @@
   # Set your time zone
   #time.timeZone = "Europe/Berlin";
   # Configure home-manager
-  home-manager = {
-    config = ./home.nix;
-    backupFileExtension = "hm-bak";
-    useGlobalPkgs = true;
-  };
+  #home-manager = {
+  #  config = ./home-manager/home.nix;
+  #  backupFileExtension = "hm-bak";
+  #  useGlobalPkgs = true;
+  #};
 }

@@ -17,8 +17,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    nixcats-nvim-uwu.url = "github:erdilix/nixcats-nvim-uwu";
   };
-  outputs = { self, nixpkgs, nixpkgsold,  home-manager, nix-on-droid, ... }: {
+  outputs = { self, nixpkgs, nixpkgsold,  home-manager, nix-on-droid, nixcats-nvim-uwu, ... }@inputs:
+    let
+      system = "aarch64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+	  nix-on-droid.overlays.default
+	  #add other overlays
+        ];
+      };
+    in {
     
     nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
       modules = [
@@ -42,21 +53,27 @@
       # list of extra special args for Nix-on-Droid modules
       extraSpecialArgs = {
         # rootPath = ./.;
+	inherit inputs system;
       };
 
       # set nixpkgs instance, it is recommended to apply `nix-on-droid.overlays.default`
-      pkgs = import nixpkgs {
-        system = "aarch64-linux";
-
-        overlays = [
-          nix-on-droid.overlays.default
-          # add other overlays
-        ];
-      };
+      inherit pkgs;
 
       # set path to home-manager flake
       home-manager-path = home-manager.outPath;
     };
+    
+    # standalone home manager confih
+      homeConfigurations = {
+        erdilix = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ 
+            ./home-manager/home.nix
+            nixcats-nvim-uwu.homeModules.default
+          ];
+          extraSpecialArgs = { inherit inputs system; };
+        };
+      };
 
   };
 }
