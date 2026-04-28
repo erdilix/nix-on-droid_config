@@ -29,23 +29,25 @@
   programs.zoxide.enable = true;
   programs.yazi = {
 	enable = true;
+	
   };
   programs.git = {
 	enable = true;
 	userEmail = "test@gmail.com";
-	userName = "erxelnut";
+	userName = "erdiloid";
   };
   programs.zsh = {
   	enable = true;
 	enableCompletion = true;
 	autosuggestion.enable = true;
 	syntaxHighlighting.enable = true;
-	dotDir = ".config/zsh";
+	#dotDir = ".config/zsh";
+	dotDir = "${config.home.homeDirectory}/.config/zsh";
 	oh-my-zsh = {
 	  enable = true;
 	};
 	initContent = ''
-	  source ~/.config/zsh/highlight-colors.zsh
+	  source ${config.home.homeDirectory}/.config/zsh/highlight-colors.zsh
     	  source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 	  [[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh 
 	'';

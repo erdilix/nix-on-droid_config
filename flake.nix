@@ -2,7 +2,7 @@
   description = "Advanced example of Nix-on-Droid system config with home-manager.";
 
   inputs = {
-    #nixpkgsold.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgsold.url = "github:NixOS/nixpkgs/nixos-24.05";
     #nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
@@ -18,11 +18,19 @@
       inputs.home-manager.follows = "home-manager";
     };
   };
-  outputs = { self, nixpkgs,  home-manager, nix-on-droid, ... }: {
+  outputs = { self, nixpkgs, nixpkgsold,  home-manager, nix-on-droid, ... }: {
     
     nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
       modules = [
         ./nix-on-droid.nix
+	# wrap functionable nix-collect-garbage
+	({pkgs, ...}:{
+	  environment.packages = [
+	    (pkgs.writeShellScriptBin "ngc" ''
+	      exec "${nixpkgsold.legacyPackages.${pkgs.system}.nix}/bin/nix-collect-garbage" "$@" 
+	    '')
+	  ];
+	})
         # list of extra modules for Nix-on-Droid system
         # { nix.registry.nixpkgs.flake = nixpkgs; }
         # ./path/to/module.nix
