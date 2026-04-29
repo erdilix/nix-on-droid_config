@@ -9,13 +9,13 @@
   home.packages = with pkgs;[
 	fastfetch
         htop
-        #curl
-	#zsh
+        curl
+	zsh
 	zsh-completions
 	zsh-powerlevel10k
 	ffmpeg
 	tree
-	#eza
+	eza
 	tenere
         #cmatrix
 	#browsh
